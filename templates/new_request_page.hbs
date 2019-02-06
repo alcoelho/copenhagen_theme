@@ -1,3 +1,7 @@
+<head>
+  <script type ="text/javascript" src="./script.js"></script>
+</head>
+
 <div class="container-divider"></div>
 <div class="container">
   <nav class="sub-nav">
@@ -15,6 +19,175 @@
   </h1>
 
   <div class="form">
-    {{request_form}}
+    
+    <form id="custom_form" data-form="" data-form-type="request" class="request-form" action="/hc/en-us/requests" accept-charset="UTF-8" method="post">
+      
+      <div class="form-field string  required  request_custom_fields_360016361311">
+        <label for="form-field string  required  request_custom_fields_360016361311">
+          Data da movimentação
+        </label>
+        <input type="text" class="datepicker" value aria-label="Use as setas para escolher uma data" style="display: none;">
+        <input type="text" name="request[custom_fields][360016361311]" id="request-data" data-datepicker aria-required="true" readonly="readonly">
+      </div>
+      
+      <div class="form-field string  required " id="request-origem">
+        <label for="request_custom_fields_360016303952">
+          Origem do material
+        </label>
+        <select id="request-origem-opcoes" onchange="escondeDiv(document.getElementById('request-origem-opcoes')) " name="request[custom_fields][360016303952]" class="nesty-input" tabindex="0" style="max-width: 100%">
+        </select>
+      </div>
+      
+      <div class="form-field string  required  request_custom_fields_360016304052" id="request-finalidade0">
+        <label for="request_custom_fields_360016304052">
+          Finalidade da movimentação
+        </label>
+        <select id="request-finalidade0-opcoes" name="request[custom_fields][360016304052]" class="nesty-input" tabindex="0" style="max-width: 100%">
+          <option></option>
+        </select>
+      </div>
+      
+      <div class="form-field string required request-finalidade-proprio" id="request-finalidade-proprio">
+        <label for="request_custom_fields_360016305772">
+          Finalidade da movimentação
+        </label>
+        <select id="request-finalidade-proprio-opcoes" name="request[custom_fields][360016305772]" tabindex="0" style="max-width: 100%">
+        </select>
+      </div>
+      
+      <div class="form-field string required request-finalidade-terceiro" id="request-finalidade-terceiro">
+        <label for="request_custom_fields_360016305792">
+          Finalidade da movimentação
+        </label>
+        <select id="request-finalidade-terceiro-opcoes" name="request[custom_fields][360016305792]" class="nesty-input" tabindex="0" style="max-width: 100%">
+        </select>
+      </div>
+      
+      <h3>Filial - Emissor de NF</h3>
+      
+      <div class="form-field string  required" id="request-filial">
+        <label for="request_custom_fields_360016304072">
+					Filial de origem
+        </label>
+        <select id="request_filial_opcoes" name="request[custom_fields][360016304072]" class="nesty-input" tabindex="0" style="max-width: 100%">
+        </select>
+      </div>
+      
+      <h3>Destinatário</h3>
+      
+      <div class="form-field string  required  request_custom_fields_360016356691">
+        <label for="request_custom_fields_360016356691">
+          Código Fornecedor Protheus
+        </label>
+        <input type="text" id="request_codforn_protheus" name="request[custom_fields][360016356691]" />
+      </div>
+      
+      <h3>Transportador / Volumes transportados</h3>
+      
+      <div class="form-field string  required  request_custom_fields_360016304092" id="request-responsabilidade">
+        <label for="request_custom_fields_360016304092">
+					Responsabilidade do frete
+        </label>
+        <select id="request_responsabilidade_opcoes" name="request[custom_fields][360016304092]" class="nesty-input" tabindex="0">
+        </select>
+      </div>
+      
+      <div class="form-field string  required  request_custom_fields_360016304132" id="request_codtrans_protheus">
+        <label for="request_custom_fields_360016304132">
+					Código Transportador Protheus
+        </label>
+        <select id="request_codtrans_protheus_options" name="request[custom_fields][360016304132]" class="nesty-input" tabindex="0">
+        </select>
+      </div>
+      
+      <div class="form-field string  required  request_custom_fields_360016356891">
+        <label for="request_custom_fields_360016356891">
+          Placa
+        </label>
+        <input type="text" id="request_placa" name="request[custom_fields][360016356891]" />
+      </div>
+      
+      <div class="form-field decimal  required  request_custom_fields_360016356931">
+        <label for="request_custom_fields_360016356931">
+          Quantidade/volume
+        </label>
+        <input type="text" id="request_qtdvol" name="request[custom_fields][360016356931]" />
+      </div>
+      
+      <div class="form-field decimal  required  request_custom_fields_360016356951">
+        <label for="request_custom_fields_360016356951">
+          Espécie
+        </label>
+        <input type="text" id="request_especie" name="request[custom_fields][360016356951]" />
+      </div>
+      
+      <div class="form-field decimal  required  request_custom_fields_360016304152">
+        <label for="request_custom_fields_360016304152">
+          Peso bruto
+        </label>
+        <input type="text" id="request_pbruto" name="request[custom_fields][360016304152]" />
+      </div>
+      
+      <div class="form-field decimal  required  request_custom_fields_360016304172">
+        <label for="request_custom_fields_360016304172">
+          Peso líquido
+        </label>
+        <input type="text" id="request_pliquido" name="request[custom_fields][360016304172]" />
+      </div>
+      
+      <h3>Relação de materiais</h3>
+      <div class="form-field text  required  request_custom_fields_360016356971">
+        <textarea style="display: none;" id="request_relacao" aria-required="true" name="request[custom_fields][360016356971]"></textarea>
+        <table id="materiais">
+					<tr>
+						<th>Código do Produto (Protheus)</th>
+						<th>Descrição do Material</th>
+						<th>Número de Série</th>
+						<th>Quantidade</th>
+						<th>Valor Unitário</th>
+						<th>Valor Total</th>
+						<th>Nota Fiscal de Origem</th>
+					</tr>
+					<tr class="material">
+						<td>
+							<input type="text">
+						</td>
+						<td>
+							<input type="text">
+						</td>
+						<td>
+							<input type="text">
+						</td>
+						<td>
+							<input type="text">
+						</td>
+						<td>
+							<input type="text">
+						</td>
+						<td>
+							<input type="text">
+						</td>
+						<td>
+							<input type="text">
+						</td>
+					</tr>
+				</table>
+          <img id="add" src="https://image.freepik.com/free-icon/add-symbol_318-364.jpg" onclick="criaLinha()">
+      </div>  
+      
+      <h3>Informações complementares da nota fiscal</h3>
+      <div class="form-field text  required  request_custom_fields_360016356991">
+        <label for="request-observ">
+          Observações
+        </label>
+        <textarea id="request-observ" aria-required="true" name="request[custom_fields][360016356991]" placeholder="Ex. Número manifesto resíduo, indicar responsável pelo recebimento, etc..."></textarea>
+      </div>   
+      <input type="hidden" name="request[description]" id="request_materials" />
+      <input type="hidden" name="request[subject]" id="request_subject" />
+      <footer>
+        <input type="submit" name="commit" value="Enviar"/> 
+      </footer>
+    </form>
+  	{{request_form}}
   </div>
 </div>

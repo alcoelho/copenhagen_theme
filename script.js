@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+  
   function closest (element, selector) {
     if (Element.prototype.closest) {
       return element.closest(selector);
@@ -152,4 +153,104 @@ document.addEventListener('DOMContentLoaded', function() {
       this.setAttribute('aria-expanded', !isExpanded);
     });
   });
+  
+
+  
+  authCustomForm();
+  copiaAnexos();
+  
+  copyOptions('request_custom_fields_360016321092', 'request-origem');
+  copyOptions('request_custom_fields_360016305772', 'request-finalidade-proprio');
+  copyOptions('request_custom_fields_360016305792', 'request-finalidade-terceiro');
+  copyOptions('request_custom_fields_360016304072', 'request-filial');
+  copyOptions('request_custom_fields_360016304092', 'request-responsabilidade');
+  copyOptions('request_custom_fields_360016304132', 'request_codtrans_protheus');
+  
+  $('#new_request').remove();
+  
+  $('#custom_form').on('submit', function(event){
+    $('#request_materials').val(describeMaterials());
+    $('#request_subject').val('Nova NF');
+  });
+  
 });
+
+/* authCustomForm()
+ * habilita autenticação no formulário customizado copiando o auth_token do formulário original
+ * também remove o formulário original
+ * TODO: copiar também os atributos do form (action, data-form, etc)
+*/
+function authCustomForm(){
+  const $requestAuthField = $('#new_request input[name=authenticity_token]');
+  const $originalForm = $('#new_request');
+  const $ourForm = $('#custom_form');
+
+  $ourForm.append($requestAuthField); //move campo de autenticação p/ o formulário customizado
+}
+
+
+function copiaAnexos() {
+  const $divAnexos = $('#new_request .form-field:last')
+  const $originalForm = $('#new_request');
+  const $ourForm = $('#custom_form');
+
+  $ourForm.find('footer').before($divAnexos); 
+}
+
+function copyOptions(idSource, idDest) {
+  const $source = $('#'+idSource);
+  const $dest = $('#'+idDest);
+  const $destSelect = $dest.find('select');
+  const values = $source.data('tagger');
+  $dest.find('option').remove();
+
+  values.forEach(function (item) {
+    const $option = $('<option>')
+    $option.val(item.value);
+    $option.html(item.label);
+    $destSelect.append($option);
+  });
+  
+  $destSelect.show();
+  $dest.find('a').remove();
+}
+
+function escondeDiv(elemento) {
+	let selecionado = elemento.options[elemento.selectedIndex].value;
+	document.getElementById('request-finalidade0').style.display = 'none';
+
+	if (selecionado === 'proprio') {
+		document.getElementById('request-finalidade-proprio').style.display = 'block';
+		document.getElementById('request-finalidade-terceiro').style.display = 'none';
+	} else {
+		document.getElementById('request-finalidade-terceiro').style.display = 'block';
+		document.getElementById('request-finalidade-proprio').style.display = 'none';
+	}
+}
+
+function criaLinha() {
+	let linhaClonada = $('.material:first').clone();
+	linhaClonada.find('input[type=text]').val('');
+	$('#materiais').append(linhaClonada);
+}
+
+function describeMaterial ($row) {
+  let labels = ["Cod. Produto", "Descrição", "Num. Série", "Quantidade", "Valor", "Total", "NF Origem"];
+  let material = "";
+  $row.find('input').each(function(i, input){
+    const value = $(input).val();
+    const label = labels[i];
+    material += label + ': ' + value + '  ';
+  });
+  return material;
+}
+
+function describeMaterials () {
+  let materials = '';
+  $('#materiais tr').each(function (i, row){
+    materials += describeMaterial($(row)) + '\n';
+  });
+  return materials;
+}
+  
+  
