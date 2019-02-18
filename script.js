@@ -212,12 +212,19 @@ function authCustomForm(){
   $ourForm.append($requestAuthField); //move campo de autenticação p/ o formulário customizado
 }
 
-function setFieldName(elementId, backendId) {
+/**
+ * setFieldName()
+ * configura o elemento de ID _elementId_ de forma que o atributo __name__ deste corresponda com o customfield de id _fieldId_.
+ * se o elemento passado via _elementId_ não for um select, input ou textarea, será procurado um elemento filho deste que o seja.
+ * @param string elementId: id do campo HTML a ter o nome alterado
+ * @param string backendId: o ID do campo customizado no backend do zendesk
+ */
+function setFieldName(elementId, backendFieldId) {
   let $field = $("#"+elementId);
-  if (!$field.is('input, select')) {
-    $field = $field.find('input, select');
+  if (!$field.is('input, select, textarea')) {
+    $field = $field.find('input, select, textarea');
   }
-  const fieldName = "request[custom_fields][" + backendId + "]";
+  const fieldName = "request[custom_fields][" + backendFieldId + "]";
   $field.attr('name', fieldName);
 }
 
