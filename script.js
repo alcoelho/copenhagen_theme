@@ -158,13 +158,37 @@ document.addEventListener('DOMContentLoaded', function() {
   
   authCustomForm();
   copiaAnexos();
+
+  const fieldMap = {
+    'request-data':                   '360016811492',
+    'request-origem':                 '360016671492',
+    'request-finalidade0':            '360016846911',
+    'request-finalidade-terceiro':    '360016810212',
+    'request-finalidade-proprio':     '360016847071',
+    'request-filial':                 '360016847111',
+    'request_codforn_protheus':       '360016847131',
+    'request-responsabilidade':       '360016847091',
+    'request_codtrans_protheus':      '360016847151',
+    'request_placa':                  '360016847171',
+    'request_qtdvol':                 '360016847191',
+    'request_especie':                '360016847211',
+    'request_pbruto':                 '360016847231',
+    'request_pliquido':               '360016847251',
+    'request-observ':                 '360016847331'
+
+  }
+
+  for (let selector in fieldMap) {
+    setFieldName(selector, fieldMap[selector]);
+  }
+
   
-  copyOptions('request_custom_fields_360016321092', 'request-origem');
-  copyOptions('request_custom_fields_360016305772', 'request-finalidade-proprio');
-  copyOptions('request_custom_fields_360016305792', 'request-finalidade-terceiro');
-  copyOptions('request_custom_fields_360016304072', 'request-filial');
-  copyOptions('request_custom_fields_360016304092', 'request-responsabilidade');
-  copyOptions('request_custom_fields_360016304132', 'request_codtrans_protheus');
+  // copyOptions('request_custom_fields_360016321092', 'request-origem');
+  // copyOptions('request_custom_fields_360016305772', 'request-finalidade-proprio');
+  // copyOptions('request_custom_fields_360016305792', 'request-finalidade-terceiro');
+  // copyOptions('request_custom_fields_360016304072', 'request-filial');
+  // copyOptions('request_custom_fields_360016304092', 'request-responsabilidade');
+  // copyOptions('request_custom_fields_360016304132', 'request_codtrans_protheus');
   
   $('#new_request').remove();
   
@@ -188,6 +212,14 @@ function authCustomForm(){
   $ourForm.append($requestAuthField); //move campo de autenticação p/ o formulário customizado
 }
 
+function setFieldName(elementId, backendId) {
+  let $field = $("#"+elementId);
+  if (!$field.is('input, select')) {
+    $field = $field.find('input, select');
+  }
+  const fieldName = "request[custom_fields][" + backendId + "]";
+  $field.attr('name', fieldName);
+}
 
 function copiaAnexos() {
   const $divAnexos = $('#new_request .form-field:last')
