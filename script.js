@@ -156,9 +156,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
 
   
+  // # SETUP DO FORMULÁRIO CUSTOMIZADO
+
   authCustomForm();
   copiaAnexos();
 
+  // mapa com o ID do elemento de cada campo associado ao ID do campo no backend do zendesk
   const fieldMap = {
     'request-data':                   '360016811492',
     'request-origem':                 '360016671492',
@@ -178,20 +181,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   }
 
+  // configura cada campo
   for (let selector in fieldMap) {
-    setFieldName(selector, fieldMap[selector]);
+    const backendId = fieldMap[selector];
+    setupField(selector, backendId);
   }
-
   
-  // copyOptions('request_custom_fields_360016321092', 'request-origem');
-  // copyOptions('request_custom_fields_360016305772', 'request-finalidade-proprio');
-  // copyOptions('request_custom_fields_360016305792', 'request-finalidade-terceiro');
-  // copyOptions('request_custom_fields_360016304072', 'request-filial');
-  // copyOptions('request_custom_fields_360016304092', 'request-responsabilidade');
-  // copyOptions('request_custom_fields_360016304132', 'request_codtrans_protheus');
-  
+  // remove o formulário default
   $('#new_request').remove();
-  
+
+  // antes de enviar o formulário:
+  // 1) coloca a descrição dos materiais na textarea oculta #request_materials
+  // 2) coloca um título (requerido) em #request_subject
   $('#custom_form').on('submit', function(event){
     $('#request_materials').val(describeMaterials());
     $('#request_subject').val('Nova NF');
@@ -213,11 +214,12 @@ function authCustomForm(){
 }
 
 /**
- * setFieldName()
+ * setFieldName ( elementId, backendFieldId )
  * configura o elemento de ID _elementId_ de forma que o atributo __name__ deste corresponda com o customfield de id _fieldId_.
  * se o elemento passado via _elementId_ não for um select, input ou textarea, será procurado um elemento filho deste que o seja.
  * @param string elementId: id do campo HTML a ter o nome alterado
  * @param string backendId: o ID do campo customizado no backend do zendesk
+ * @returns {jQuery} o campo
  */
 function setFieldName(elementId, backendFieldId) {
   let $field = $("#"+elementId);
@@ -226,6 +228,7 @@ function setFieldName(elementId, backendFieldId) {
   }
   const fieldName = "request[custom_fields][" + backendFieldId + "]";
   $field.attr('name', fieldName);
+  return $field;
 }
 
 function copiaAnexos() {
@@ -236,6 +239,14 @@ function copiaAnexos() {
   $ourForm.find('footer').before($divAnexos); 
 }
 
+/**
+ * copyOptions ( idSource, idDest )
+ * copia as opções de um select gerado pelo zendesk via data-attributes no campo _idSource_ para o campo _idDest_ na forma de elementos <option>s 
+ * o select resultante não é compatível com a biblioteca de interface do zendesk.
+ * @param string idSource id do campo original 
+ * @param string idDest id do campo no formulário customizado
+ * @returns {jQuery} o campo destino
+ */
 function copyOptions(idSource, idDest) {
   const $source = $('#'+idSource);
   const $dest = $('#'+idDest);
@@ -252,6 +263,23 @@ function copyOptions(idSource, idDest) {
   
   $destSelect.show();
   $dest.find('a').remove();
+  return $dest;
+}
+
+/**
+ * setupField ( elementId, backendFieldId )
+ * configura um campo para uso, evocando setFieldName() e, 
+ * se ele for um select, copyOptions()
+ * @param string elementId 
+ * @param string backendFieldId
+ * @returns {jQuery} o campo
+ */
+function setupField(elementId, backendFieldId) {
+  const $field = setFieldName(elementId, backendFieldId);
+  if ($field.is('select') || $field.find('select').length != 0) {
+    copyOptions('request_custom_fields_' + backendFieldId, elementId);
+  }
+  return $field;
 }
 
 function escondeDiv(elemento) {
@@ -273,6 +301,12 @@ function criaLinha() {
 	$('#materiais').append(linhaClonada);
 }
 
+/**
+ * describeMaterial ( $row )
+ * cria e retorna uma string descrevendo um material com os dados de _$row_
+ * @param {jQuery} $row uma linha (<tr>) representando um material 
+ * @returns string a string descrevendo o material
+ */
 function describeMaterial ($row) {
   let labels = ["Cod. Produto", "Descrição", "Num. Série", "Quantidade", "Valor", "Total", "NF Origem"];
   let material = "";
@@ -284,6 +318,12 @@ function describeMaterial ($row) {
   return material;
 }
 
+/**
+ * describeMaterials()
+ * retorna uma string descrevendo todos os materiais presentes, um por linha
+ * chamando describeMaterial(linha) para cada linha
+ * @returns string a string descrevendo todos os materiais
+ */
 function describeMaterials () {
   let materials = '';
   $('#materiais tr').each(function (i, row){
