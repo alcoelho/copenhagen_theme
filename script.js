@@ -201,16 +201,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* authCustomForm()
- * habilita autenticação no formulário customizado copiando o auth_token do formulário original
- * também remove o formulário original
- * TODO: copiar também os atributos do form (action, data-form, etc)
+ * habilita autenticação no formulário customizado: 
+ * 1) copiando o campo auth_token do formulário original
+ * 2) copiando todos os atributos (action, method, etc) do formulário original 
 */
 function authCustomForm(){
   const $requestAuthField = $('#new_request input[name=authenticity_token]');
   const $originalForm = $('#new_request');
-  const $ourForm = $('#custom_form');
-
+  const originalAttributes = $originalForm[0].attributes;
+  const $ourForm = $('#custom_form'); 
   $ourForm.append($requestAuthField); //move campo de autenticação p/ o formulário customizado
+  // percorre cada atributo
+  for(let i = 0, attribute ; attribute = originalAttributes[i], i < originalAttributes.length; i++) {
+    if (attribute.name == 'id') continue; //ignora o atributo ID
+    $ourForm.attr(attribute.name, attribute.value);
+  }
+  
 }
 
 /**
