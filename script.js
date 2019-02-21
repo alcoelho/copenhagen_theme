@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
-  
-  function closest (element, selector) {
+document.addEventListener('DOMContentLoaded', function () {
+
+  function closest(element, selector) {
     if (Element.prototype.closest) {
       return element.closest(selector);
     }
@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // social share popups
-  Array.prototype.forEach.call(document.querySelectorAll('.share a'), function(anchor) {
-    anchor.addEventListener('click', function(e) {
+  Array.prototype.forEach.call(document.querySelectorAll('.share a'), function (anchor) {
+    anchor.addEventListener('click', function (e) {
       e.preventDefault();
       window.open(this.href, '', 'height = 500, width = 500');
     });
@@ -44,9 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
     requestCommentSubmit = document.querySelector('.request-container .comment-container .request-submit-comment');
 
   if (showRequestCommentContainerTrigger) {
-    showRequestCommentContainerTrigger.addEventListener('click', function() {
+    showRequestCommentContainerTrigger.addEventListener('click', function () {
       showRequestCommentContainerTrigger.style.display = 'none';
-      Array.prototype.forEach.call(requestCommentFields, function(e) { e.style.display = 'block'; });
+      Array.prototype.forEach.call(requestCommentFields, function (e) { e.style.display = 'block'; });
       requestCommentSubmit.style.display = 'inline-block';
 
       if (commentContainerTextarea) {
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var requestCommentTextarea = document.querySelector('.request-container .comment-container textarea');
 
   if (requestCommentTextarea) {
-    requestCommentTextarea.addEventListener('input', function() {
+    requestCommentTextarea.addEventListener('input', function () {
       if (requestCommentTextarea.value === '') {
         if (requestMarkAsSolvedButton) {
           requestMarkAsSolvedButton.innerText = requestMarkAsSolvedButton.getAttribute('data-solve-translation');
@@ -95,8 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Submit requests filter form in the request list page
-  Array.prototype.forEach.call(document.querySelectorAll('#request-status-select, #request-organization-select'), function(el) {
-    el.addEventListener('change', function(e) {
+  Array.prototype.forEach.call(document.querySelectorAll('#request-status-select, #request-organization-select'), function (el) {
+    el.addEventListener('change', function (e) {
       e.stopPropagation();
       closest(this, 'form').submit();
     });
@@ -112,19 +112,19 @@ document.addEventListener('DOMContentLoaded', function() {
   var burgerMenu = document.querySelector('.header .icon-menu');
   var userMenu = document.querySelector('#user-nav');
 
-  burgerMenu.addEventListener('click', function(e) {
+  burgerMenu.addEventListener('click', function (e) {
     e.stopPropagation();
     toggleNavigation(this);
   });
 
-  burgerMenu.addEventListener('keyup', function(e) {
+  burgerMenu.addEventListener('keyup', function (e) {
     if (e.keyCode === 13) { // Enter key
       e.stopPropagation();
       toggleNavigation(this);
     }
   });
 
-  userMenu.addEventListener('keyup', function(e) {
+  userMenu.addEventListener('keyup', function (e) {
     if (e.keyCode === 27) { // Escape key
       e.stopPropagation();
       this.setAttribute('aria-expanded', false);
@@ -140,44 +140,44 @@ document.addEventListener('DOMContentLoaded', function() {
   var requestOrganisationSelect = document.querySelector('#request-organization select');
 
   if (requestOrganisationSelect) {
-    requestOrganisationSelect.addEventListener('change', function() {
+    requestOrganisationSelect.addEventListener('change', function () {
       closest(this, 'form').submit();
     });
   }
 
   // Toggles expanded aria to collapsible elements
-  Array.prototype.forEach.call(document.querySelectorAll('.collapsible-nav, .collapsible-sidebar'), function(el) {
-    el.addEventListener('click', function(e) {
+  Array.prototype.forEach.call(document.querySelectorAll('.collapsible-nav, .collapsible-sidebar'), function (el) {
+    el.addEventListener('click', function (e) {
       e.stopPropagation();
       var isExpanded = this.getAttribute('aria-expanded') === 'true';
       this.setAttribute('aria-expanded', !isExpanded);
     });
   });
-  
 
-  
+
+
   // # SETUP DO FORMULÁRIO CUSTOMIZADO
 
   authCustomForm();
-  copiaAnexos();
+  //copiaAnexos();
 
   // mapa com o ID do elemento de cada campo associado ao ID do campo no backend do zendesk
   const fieldMap = {
-    'request-data':                   '360016811492',
-    'request-origem':                 '360016671492',
-    'request-finalidade0':            '360016846911',
-    'request-finalidade-terceiro':    '360016810212',
-    'request-finalidade-proprio':     '360016847071',
-    'request-filial':                 '360016847111',
-    'request_codforn_protheus':       '360016847131',
-    'request-responsabilidade':       '360016847091',
-    'request_codtrans_protheus':      '360016847151',
-    'request_placa':                  '360016847171',
-    'request_qtdvol':                 '360016847191',
-    'request_especie':                '360016847211',
-    'request_pbruto':                 '360016847231',
-    'request_pliquido':               '360016847251',
-    'request-observ':                 '360016847331'
+    'request-data': '360016030491',
+    'request-origem': '360016898612',
+    'request-finalidade-terceiro': '360016930391',
+    'request-finalidade-proprio': '360016898672',
+    'request-filial': '360016898912',
+    'request_codforn_protheus': '360016930691',
+    'request-responsabilidade': '360016898932',
+    'request_codtrans_protheus': '360016940091',
+    'request_placa': '360016930711',
+    'request_qtdvol': '360016941931',
+    'request_especie': '360016898972',
+    'request_pbruto': '360016930751',
+    'request_pliquido': '360016898992',
+    'request-observ': '360016899492',
+    'request-posicao-estoque': '360016898852',
 
   }
 
@@ -186,18 +186,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const backendId = fieldMap[selector];
     setupField(selector, backendId);
   }
-  
+
   // remove o formulário default
   $('#new_request').remove();
 
   // antes de enviar o formulário:
   // 1) coloca a descrição dos materiais na textarea oculta #request_materials
   // 2) coloca um título (requerido) em #request_subject
-  $('#custom_form').on('submit', function(event){
+  $('#custom_form').on('submit', function (event) {
     $('#request_materials').val(describeMaterials());
     $('#request_subject').val('Nova NF');
   });
-  
+
 });
 
 /* authCustomForm()
@@ -205,18 +205,18 @@ document.addEventListener('DOMContentLoaded', function() {
  * 1) copiando o campo auth_token do formulário original
  * 2) copiando todos os atributos (action, method, etc) do formulário original 
 */
-function authCustomForm(){
+function authCustomForm() {
   const $requestAuthField = $('#new_request input[name=authenticity_token]');
   const $originalForm = $('#new_request');
   const originalAttributes = $originalForm[0].attributes;
-  const $ourForm = $('#custom_form'); 
+  const $ourForm = $('#custom_form');
   $ourForm.append($requestAuthField); //move campo de autenticação p/ o formulário customizado
   // percorre cada atributo
-  for(let i = 0, attribute ; attribute = originalAttributes[i], i < originalAttributes.length; i++) {
+  for (let i = 0, attribute; attribute = originalAttributes[i], i < originalAttributes.length; i++) {
     if (attribute.name == 'id') continue; //ignora o atributo ID
     $ourForm.attr(attribute.name, attribute.value);
   }
-  
+
 }
 
 /**
@@ -228,7 +228,7 @@ function authCustomForm(){
  * @returns {jQuery} o campo
  */
 function setFieldName(elementId, backendFieldId) {
-  let $field = $("#"+elementId);
+  let $field = $("#" + elementId);
   if (!$field.is('input, select, textarea')) {
     $field = $field.find('input, select, textarea');
   }
@@ -242,7 +242,7 @@ function copiaAnexos() {
   const $originalForm = $('#new_request');
   const $ourForm = $('#custom_form');
 
-  $ourForm.find('footer').before($divAnexos); 
+  $ourForm.find('footer').before($divAnexos);
 }
 
 /**
@@ -254,10 +254,11 @@ function copiaAnexos() {
  * @returns {jQuery} o campo destino
  */
 function copyOptions(idSource, idDest) {
-  const $source = $('#'+idSource);
-  const $dest = $('#'+idDest);
+  const $source = $('#' + idSource);
+  const $dest = $('#' + idDest);
   const $destSelect = $dest.find('select');
   const values = $source.data('tagger');
+  console.log($source); console.log(values);
   $dest.find('option').remove();
 
   values.forEach(function (item) {
@@ -266,7 +267,7 @@ function copyOptions(idSource, idDest) {
     $option.html(item.label);
     $destSelect.append($option);
   });
-  
+
   $destSelect.show();
   $dest.find('a').remove();
   return $dest;
@@ -289,22 +290,22 @@ function setupField(elementId, backendFieldId) {
 }
 
 function escondeDiv(elemento) {
-	let selecionado = elemento.options[elemento.selectedIndex].value;
-	document.getElementById('request-finalidade0').style.display = 'none';
+  let selecionado = elemento.options[elemento.selectedIndex].value;
+  document.getElementById('request-finalidade0').style.display = 'none';
 
-	if (selecionado === 'proprio') {
-		document.getElementById('request-finalidade-proprio').style.display = 'block';
-		document.getElementById('request-finalidade-terceiro').style.display = 'none';
-	} else {
-		document.getElementById('request-finalidade-terceiro').style.display = 'block';
-		document.getElementById('request-finalidade-proprio').style.display = 'none';
-	}
+  if (selecionado === 'proprio') {
+    document.getElementById('request-finalidade-proprio').style.display = 'block';
+    document.getElementById('request-finalidade-terceiro').style.display = 'none';
+  } else {
+    document.getElementById('request-finalidade-terceiro').style.display = 'block';
+    document.getElementById('request-finalidade-proprio').style.display = 'none';
+  }
 }
 
 function criaLinha() {
-	let linhaClonada = $('.material:first').clone();
-	linhaClonada.find('input[type=text]').val('');
-	$('#materiais').append(linhaClonada);
+  let linhaClonada = $('.material:first').clone();
+  linhaClonada.find('input[type=text]').val('');
+  $('#materiais').append(linhaClonada);
 }
 
 /**
@@ -313,10 +314,10 @@ function criaLinha() {
  * @param {jQuery} $row uma linha (<tr>) representando um material 
  * @returns string a string descrevendo o material
  */
-function describeMaterial ($row) {
+function describeMaterial($row) {
   let labels = ["Cod. Produto", "Descrição", "Num. Série", "Quantidade", "Valor", "Total", "NF Origem"];
   let material = "";
-  $row.find('input').each(function(i, input){
+  $row.find('input').each(function (i, input) {
     const value = $(input).val();
     const label = labels[i];
     material += label + ': ' + value + '  ';
@@ -330,12 +331,10 @@ function describeMaterial ($row) {
  * chamando describeMaterial(linha) para cada linha
  * @returns string a string descrevendo todos os materiais
  */
-function describeMaterials () {
+function describeMaterials() {
   let materials = '';
-  $('#materiais tr').each(function (i, row){
+  $('#materiais tr').each(function (i, row) {
     materials += describeMaterial($(row)) + '\n';
   });
   return materials;
 }
-  
-  
