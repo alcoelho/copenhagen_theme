@@ -199,12 +199,15 @@ document.addEventListener('DOMContentLoaded', function () {
   $('.qtd').mask('999999');
   $('.money').mask('000.000.000.000.000.000.000,00', { reverse: true });
 
+  // valida formulário. regras estão inline nos elementos
+  $('#custom_form').validate();
+
   // antes de enviar o formulário:
   // 1) coloca a descrição dos materiais na textarea oculta #request_materials
   // 2) coloca um título (requerido) em #request_subject
   $('#custom_form').on('submit', function (event) {
     $('#request_materials').val(describeMaterials());
-    $('#request_subject').val('Nova NF');
+    $('#request_subject').val(makeTitle());
   });
 
 });
@@ -354,10 +357,10 @@ function describeMaterials() {
  */
 function makeTitle() {
   // Data Origem Filial PesoB.
-  const date = $('request-data').val();
-  const origem = $('request-origem-opcoes').val() == 'material_petrorio' ? 'PetroRio' : '3o';
-  const filial = $('request-filial').val();
-  const peso = $('request_pbruto').val();
+  const date = $('#request-data').val();
+  const origem = $('#request-origem-opcoes').val() == 'material_petrorio' ? 'PetroRio' : '3o';
+  const filial = $('#request-filial select option:selectd').text();
+  const peso = $('#request_pbruto').val();
 
   return date + ' ' + origem + ' ' + filial + ' ' + peso;
 
