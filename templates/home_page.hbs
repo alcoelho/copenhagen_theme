@@ -10,14 +10,15 @@
       <ul class="blocks-list">
         <li class="blocks-item">
           {{#link 'new_request_page' class='submit-a-request button-large'}}
-            Nova Nota
+          Nova Nota
           {{else}}
-            Autentique-se como Usuário Final para enviar Notas
+          Autentique-se como Usuário Final para enviar Notas
           {{/link}}
         </li>
         <li class="blocks-item">
           <h4 class="blocks-item-title">
-            FAQ
+            <a href="https://nfpetrorio.zendesk.com/hc/pt-br/articles/360023998512-Como-solicitar-notas-fiscais?">Como
+              solicitar uma nota fiscal</a>
           </h4>
         </li>
       </ul>
@@ -25,39 +26,28 @@
     </section>
 
     {{#if promoted_articles}}
-      <section class="articles">
-        <h3>{{t 'promoted_articles'}}</h3>
-        <ul class="article-list promoted-articles">
-          {{#each promoted_articles}}
-            <li class="promoted-articles-item">
-                <a href="{{url}}">
-                  {{title}}
+    <section class="articles">
+      <h3>{{t 'promoted_articles'}}</h3>
+      <ul class="article-list promoted-articles">
+        {{#each promoted_articles}}
+        <li class="promoted-articles-item">
+          <a href="{{url}}">
+            {{title}}
 
-                  {{#if internal}}
-                    <span class="icon-lock" title="{{t 'internal'}}"></span>
-                  {{/if}}
-                </a>
-            </li>
-          {{/each}}
-        </ul>
-      </section>
+            {{#if internal}}
+            <span class="icon-lock" title="{{t 'internal'}}"></span>
+            {{/if}}
+          </a>
+        </li>
+        {{/each}}
+      </ul>
+    </section>
     {{/if}}
   </section>
 
-  {{#if help_center.community_enabled}}
-    <section class="section community">
-      <h2>{{t 'community'}}</h2>
-      {{#link 'community' class='community-link'}}
-        {{t 'join_conversation'}}
-      {{/link}}
-
-      <div class="community-image"></div>
-    </section>
-  {{/if}}
-
   <section class="section activity">
     {{#if settings.show_recent_activity}}
-      {{recent_activity}}
+    {{recent_activity}}
     {{/if}}
   </section>
 </div>
