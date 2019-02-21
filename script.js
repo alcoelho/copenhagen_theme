@@ -190,6 +190,14 @@ document.addEventListener('DOMContentLoaded', function () {
   // remove o formulário default
   $('#new_request').remove();
 
+  // adiciona máscaras
+  $('.protheus').mask('999999');
+  $('#request_placa').mask('AAAAAAAAAA');
+  $('#request_pbruto').mask('000.000.000.000.000,000', { reverse: true });
+  $('#request_pliquido').mask('000.000.000.000.000,000', { reverse: true });
+  $('.qtd').mask('999999');
+  $('.money').mask('000.000.000.000.000.000.000,00', { reverse: true });
+
   // antes de enviar o formulário:
   // 1) coloca a descrição dos materiais na textarea oculta #request_materials
   // 2) coloca um título (requerido) em #request_subject
@@ -258,7 +266,6 @@ function copyOptions(idSource, idDest) {
   const $dest = $('#' + idDest);
   const $destSelect = $dest.find('select');
   const values = $source.data('tagger');
-  console.log($source); console.log(values);
   $dest.find('option').remove();
 
   values.forEach(function (item) {
@@ -337,4 +344,20 @@ function describeMaterials() {
     materials += describeMaterial($(row)) + '\n';
   });
   return materials;
+}
+
+/**
+ * makeTitle()
+ * retorna uma string para ser usada como título da nota fiscal
+ * @returns string titulo p/ nota
+ */
+function makeTitle() {
+  // Data Origem Filial PesoB.
+  const date = $('request-data').val();
+  const origem = $('request-origem-opcoes').val() == 'material_petrorio' ? 'PetroRio' : '3o';
+  const filial = $('request-filial').val();
+  const peso = $('request_pbruto').val();
+
+  return date + ' ' + origem + ' ' + filial + ' ' + peso;
+
 }
