@@ -4264,3 +4264,12 @@ select.nesty-input {
 .form-field input.error, .form-field select.error, .material input.error {
   border: 1px solid red;
 }
+
+div.buttons {
+  text-align: right;
+  padding: 8px 0;
+}
+
+img.clickable {
+  height: 25px;
+}

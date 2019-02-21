@@ -191,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
   $('#new_request').remove();
 
   // adiciona máscaras
+  // máscaras reversas começam a entrada a partir do último dígito; eg. dinheiro começa a entrada a partir dos centavos
   $('.protheus').mask('999999');
   $('.date').mask('00/00/0000');
   $('#request_placa').mask('AAAAAAAAAA');
