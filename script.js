@@ -209,6 +209,8 @@ document.addEventListener('DOMContentLoaded', function () {
     calculateTotalPrice($row)
   });
 
+  $('#materiais').on('click', '.remove', removeRow);
+
   // antes de enviar o formulário:
   // 1) coloca a descrição dos materiais na textarea oculta #request_materials
   // 2) coloca um título (requerido) em #request_subject
@@ -395,4 +397,12 @@ function calculateTotalPrice($material) {
     $total.val( total );
     return total;
   } else { return null; }
+}
+/**
+ * removeRow(event)
+ * remove o <tr>-pai do elemento que foi clicado
+ * @param {JqueryEvent} event evento passado pelo jquery 
+ */
+function removeRow(event){
+  $(this).closest('tr').remove();
 }

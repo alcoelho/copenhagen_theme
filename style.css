@@ -4270,6 +4270,10 @@ div.buttons {
   padding: 8px 0;
 }
 
+.material .remove {
+  margin: 6px 3px;
+}
+
 img.clickable {
   height: 25px;
 }
