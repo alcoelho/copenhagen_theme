@@ -4256,3 +4256,11 @@ h3 {
 select.nesty-input {
   max-width: inherit;
 }
+
+.form-field, tr.material {
+  vertical-align: top;
+}
+
+.form-field input.error, .form-field select.error, .material input.error {
+  border: 1px solid red;
+}

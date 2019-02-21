@@ -1,6 +1,8 @@
 <head>
   <script type="text/javascript" src="./script.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/localization/messages_pt_PT.min.js"></script>
 </head>
 
 <div class="container-divider"></div>
@@ -29,7 +31,7 @@
         </label>
         <input type="text" class="datepicker" value aria-label="Use as setas para escolher uma data"
           style="display: none;">
-        <input type="text" id="request-data" data-datepicker aria-required="true" readonly="readonly">
+        <input type="text" class="date" id="request-data" data-datepicker required minlength="6">
       </div>
 
       <div class="form-field string  required two-thirds" id="request-origem">
@@ -37,7 +39,7 @@
           Origem do material
         </label>
         <select id="request-origem-opcoes" onchange="escondeDiv(document.getElementById('request-origem-opcoes')) "
-          class="nesty-input" tabindex="0">
+          class="nesty-input" tabindex="0" required>
         </select>
       </div>
 
@@ -54,7 +56,7 @@
         <label for="request_custom_fields_360016305772">
           Finalidade da movimentação
         </label>
-        <select id="request-finalidade-proprio-opcoes" tabindex="0">
+        <select id="request-finalidade-proprio-opcoes" tabindex="0" required>
         </select>
       </div>
 
@@ -62,7 +64,7 @@
         <label for="request_custom_fields_360016305792">
           Finalidade da movimentação
         </label>
-        <select id="request-finalidade-terceiro-opcoes" class="nesty-input" tabindex="0">
+        <select id="request-finalidade-terceiro-opcoes" class="nesty-input" tabindex="0" required>
         </select>
       </div>
 
@@ -70,7 +72,7 @@
         <label for="request_custom_fields_360016898852">
           Posição de estoque
         </label>
-        <select id="request-posicao-estoque" class="nesty-input" tabindex="0">
+        <select id="request-posicao-estoque" class="nesty-input" tabindex="0" required>
         </select>
       </div>
 
@@ -80,7 +82,7 @@
         <label for="request_custom_fields_360016304072">
           Filial de origem
         </label>
-        <select id="request_filial_opcoes" class="nesty-input" tabindex="0">
+        <select id="request_filial_opcoes" class="nesty-input" tabindex="0" required>
         </select>
       </div>
 
@@ -90,7 +92,7 @@
         <label for="request_custom_fields_360016356691">
           Código Fornecedor Protheus
         </label>
-        <input type="text" id="request_codforn_protheus" class="protheus"/>
+        <input type="text" id="request_codforn_protheus" class="protheus" required minlength="6"/>
       </div>
 
       <h3>Transportador / Volumes transportados</h3>
@@ -100,7 +102,7 @@
         <label for="request_custom_fields_360016304092">
           Responsabilidade do frete
         </label>
-        <select id="request_responsabilidade_opcoes" class="nesty-input" tabindex="0">
+        <select id="request_responsabilidade_opcoes" class="nesty-input" tabindex="0" required>
         </select>
       </div>
 
@@ -109,7 +111,7 @@
         <label for="request_custom_fields_360016304132">
           Código Transportador Protheus
         </label>
-        <select id="request_codtrans_protheus_options" class="nesty-input" tabindex="0">
+        <select id="request_codtrans_protheus_options" class="nesty-input" tabindex="0" required>
         </select>
       </div>
 
@@ -117,35 +119,35 @@
         <label for="request_custom_fields_360016356891">
           Placa
         </label>
-        <input type="text" id="request_placa" placeholder="se não souber, digite 0" />
+        <input type="text" id="request_placa" placeholder="se não souber, digite 0" required minlength="1"/>
       </div>
 
       <div class="form-field decimal  required  request_custom_fields_360016356931 fluid third">
         <label for="request_custom_fields_360016356931">
           Quantidade/volume
         </label>
-        <input type="text" id="request_qtdvol" />
+        <input type="text" id="request_qtdvol" required minlength="1"/>
       </div>
 
       <div class="form-field decimal  required  request_custom_fields_360016356951 fluid third">
         <label for="request_custom_fields_360016356951">
           Espécie
         </label>
-        <input type="text" id="request_especie" placeholder="" />
+        <input type="text" id="request_especie" placeholder="" required minlength="3"/>
       </div>
 
       <div class="form-field decimal  required  request_custom_fields_360016304152 fluid half">
         <label for="request_custom_fields_360016304152">
           Peso bruto
         </label>
-        <input type="text" id="request_pbruto" placeholder="em kg"/>
+        <input type="text" id="request_pbruto" placeholder="em kg" required minlength="4"/>
       </div>
 
       <div class="form-field decimal  required  request_custom_fields_360016304172 fluid half">
         <label for="request_custom_fields_360016304172">
           Peso líquido
         </label>
-        <input type="text" id="request_pliquido" placeholder="em kg"/>
+        <input type="text" id="request_pliquido" placeholder="em kg" required minlength="4"/>
       </div>
 
       <h3>Relação de materiais</h3>
@@ -160,19 +162,19 @@
           </tr>
           <tr class="material">
             <td>
-              <input type="text" class="codigo protheus">
+              <input type="text" class="codigo protheus" required minlength="6">
             </td>
             <td>
-              <input type="text" class="qtd">
+              <input type="text" class="qtd" required minlength="1">
             </td>
             <td>
-              <input type="text" class="valor money">
+              <input type="text" class="valor money" required minlength="3">
             </td>
             <td>
-              <input type="text" class="total money">
+              <input type="text" class="total money" required minlength="3">
             </td>
             <td>
-              <input type="text" class="nota">
+              <input type="text" class="nota" required minlength="1">
             </td>
           </tr>
         </table>

@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // adiciona máscaras
   $('.protheus').mask('999999');
+  $('.date').mask('00/00/0000');
   $('#request_placa').mask('AAAAAAAAAA');
   $('#request_pbruto').mask('000.000.000.000.000,000', { reverse: true });
   $('#request_pliquido').mask('000.000.000.000.000,000', { reverse: true });
