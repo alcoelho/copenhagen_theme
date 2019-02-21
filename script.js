@@ -203,6 +203,12 @@ document.addEventListener('DOMContentLoaded', function () {
   // valida formulário. regras estão inline nos elementos
   $('#custom_form').validate();
 
+  // calcula valor total de materiais quando campos .qtd e .valor forem alterados
+  $('#materiais').on('change, keyup', '.qtd, .valor', function(event){
+    const $row = $(this).closest('tr');
+    calculateTotalPrice($row)
+  });
+
   // antes de enviar o formulário:
   // 1) coloca a descrição dos materiais na textarea oculta #request_materials
   // 2) coloca um título (requerido) em #request_subject
@@ -365,4 +371,28 @@ function makeTitle() {
 
   return date + ' ' + origem + ' ' + filial + ' ' + peso;
 
+}
+
+/**
+ * calculateTotalPrice($material)
+ * calcula o valor total de uma linha de materiais _$material_
+ * multiplicando o valor unitário pela quantidade
+ * seta o campo _.total_ com o valor calculado
+ * @returns string o valor total
+ */
+function calculateTotalPrice($material) {
+  const amount = $material.find('.qtd').val();
+  let value = $material.find('.valor').val();
+  value = value.replace(/\./g, '');
+  value = value.replace(',', '.');
+  const $total = $material.find('.total');
+
+  let total = parseFloat(amount) * parseFloat(value);
+  if (total) {
+    total = total.toFixed(2).toString();
+    total = total.replace('.', '');
+    total = $total.masked(total);
+    $total.val( total );
+    return total;
+  } else { return null; }
 }
